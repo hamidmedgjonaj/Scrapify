@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scrapify.UnitTests", "Scrapify.UnitTests\Scrapify.UnitTests.csproj", "{60831C68-1987-4DE1-A7AC-065D6E4318F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{94348EC9-BA8D-41B0-BCFF-F976D8AD6A02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94348EC9-BA8D-41B0-BCFF-F976D8AD6A02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94348EC9-BA8D-41B0-BCFF-F976D8AD6A02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60831C68-1987-4DE1-A7AC-065D6E4318F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60831C68-1987-4DE1-A7AC-065D6E4318F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60831C68-1987-4DE1-A7AC-065D6E4318F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60831C68-1987-4DE1-A7AC-065D6E4318F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D1A881B9-EF42-475E-AB23-066D76061DC6} = {304D08C0-25E9-4A14-BF8A-317A79592BDA}
 		{94348EC9-BA8D-41B0-BCFF-F976D8AD6A02} = {304D08C0-25E9-4A14-BF8A-317A79592BDA}
+		{60831C68-1987-4DE1-A7AC-065D6E4318F8} = {2348DE3C-61CB-442B-87CB-ABCD7282AB22}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2D079D5F-4FA4-4EFD-B5AD-38358FB0019C}

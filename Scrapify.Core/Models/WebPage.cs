@@ -2,7 +2,19 @@
 
 public class WebPage
 {
-    public string Content { get; set; } = string.Empty;
+    private readonly List<WebResource> _resources = new();
 
-    public List<WebResource> Resources { get; set; } = new();
+    public string Content { get; private set; } = string.Empty;
+
+    public WebPage(string content)
+    {
+        Content = content;
+    }
+
+    public IReadOnlyList<WebResource> GetResources() => _resources.ToList();
+
+    internal void AddResource(WebResource resource)
+    {
+        _resources.Add(resource);
+    }
 }

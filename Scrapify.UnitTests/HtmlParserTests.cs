@@ -1,17 +1,11 @@
-using Scrapify.Core.Models;
 using Scrapify.Core.Parsers;
 
 namespace Scrapy.UnitTests
 {
     public class HtmlParserTests
     {
-        [Fact]
-        public void Parse_Should_Return_WebPage_With_HTMLContent()
-        {
-            // Arrange
-            string url = "https://www.w3schools.com";
-
-            string htmlContent = """
+        private static readonly string Url = "https://www.w3schools.com";
+        private static readonly string HtmlContent = """
                 <!DOCTYPE html>
                 <html>
                 <body>
@@ -21,13 +15,30 @@ namespace Scrapy.UnitTests
                 </html>
                 """;
 
+        [Fact]
+        public void Parse_Should_Return_WebPage_With_HTMLContent()
+        {
+            // Arrange
             var htmlParser = new HtmlParser();
 
             // Act
-            var webPage = htmlParser.Parse(url, htmlContent);
+            var webPage = htmlParser.Parse(Url, HtmlContent);
 
             // Assert
-            Assert.Equal(webPage.Content, htmlContent);
+            Assert.Equal(webPage.Content, HtmlContent);
+        }
+
+        [Fact]
+        public void Parse_Should_Return_Exact_Number_Of_Resources()
+        {
+            // Arrange
+            var htmlParser = new HtmlParser();
+
+            // Act
+            var webPage = htmlParser.Parse(Url, HtmlContent);
+
+            // Assert
+            Assert.Equal(1, webPage.GetResources().Count);
         }
     }
 }

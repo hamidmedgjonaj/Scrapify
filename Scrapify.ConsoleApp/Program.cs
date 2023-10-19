@@ -1,4 +1,5 @@
-﻿using Scrapify.Core.Services;
+﻿using Scrapify.ConsoleApp;
+using Scrapify.Core.Services;
 using System.Diagnostics;
 
 static async Task RunApp()
@@ -10,11 +11,15 @@ static async Task RunApp()
     Directory.CreateDirectory(rootDirectory);
 
     var webScraper = new WebScraper(rootDirectory);
+
+    var progressLogger = new ProgressLogger();
+    webScraper.ProgressReport += progressLogger.OnProgressReported;
+
     await webScraper.ScrapWebsite(url);
 
     stopWatch.Stop();
 
-    Console.WriteLine("Time taken: {0}ms", stopWatch.Elapsed.TotalMilliseconds);
+    Console.WriteLine("Total scraping execution time: {0}ms", stopWatch.Elapsed.TotalMilliseconds);
 }
 
 await RunApp();

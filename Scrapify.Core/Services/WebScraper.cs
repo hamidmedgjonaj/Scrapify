@@ -1,6 +1,7 @@
 ﻿using Scrapify.Core.Interfaces;
 using Scrapify.Core.Models;
 using Scrapify.Core.Parsers;
+using System.Data;
 
 namespace Scrapify.Core.Services;
 
@@ -11,6 +12,8 @@ public class WebScraper
     private readonly string _rootDirectory;
 
     private static readonly ParallelOptions ParallelOptions = new() { MaxDegreeOfParallelism = 10 };
+
+    public event Action<WebScraper, double> ProgressReport;
 
     public WebScraper(string rootDirectory)
     {
@@ -28,6 +31,9 @@ public class WebScraper
 
         await ScrapChildPagesFromMainPage(mainPage, webPages, cancellationToken);
 
+        double iteration = 0;
+        double step = Math.Round(100 / (double)webPages.Count, 1, MidpointRounding.ToEven);
+
         foreach (var webPage in webPages)
         {
             await Parallel.ForEachAsync(
@@ -37,6 +43,9 @@ public class WebScraper
                 {
                     await DownloadResource(resource, cancellationToken);
                 });
+
+            OnProgressReported((double)iteration / 100);
+            iteration += step;
         }
     }
 
@@ -87,11 +96,19 @@ public class WebScraper
 
             await stream.CopyToAsync(fileStream, cancellationToken);
 
-            Console.WriteLine($"Downloaded resource: {localResourceFilePath}/{resource.FileName}");
+            // Console.WriteLine($"Downloaded resource: {localResourceFilePath}/{resource.FileName}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Failed to download resource: {resource.Uri.AbsoluteUri}. Error: {ex.Message}");
+            if (ex is not IOException)
+            {
+                Console.WriteLine($"Failed to download resource: {resource.Uri.AbsoluteUri}. Error: {ex.Message}");
+            }
         }
+    }
+
+    protected virtual void OnProgressReported(double progress)
+    {
+        ProgressReport?.Invoke(this, progress);
     }
 }

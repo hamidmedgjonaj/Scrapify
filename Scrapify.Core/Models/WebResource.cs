@@ -52,9 +52,11 @@ public sealed class WebResource
 
     private string GetDirectoryFromPath()
     {
-        string directory = IsExternalResource 
-            ? "libs" 
-            : Uri.AbsolutePath.Replace(FileName, "");
+        string directory = IsExternalResource
+        ? "libs"
+        : !string.IsNullOrEmpty(FileName) 
+            ? Uri.AbsolutePath.Replace(FileName, "") 
+            : "";
 
         return TrimFirstSlashCharacterFromStringIfAvailable(directory);
     }

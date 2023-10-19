@@ -1,9 +1,6 @@
-﻿using HtmlAgilityPack;
-using Scrapify.Core.Interfaces;
+﻿using Scrapify.Core.Interfaces;
 using Scrapify.Core.Models;
 using Scrapify.Core.Parsers;
-using System.Net.Http;
-using System.Threading;
 
 namespace Scrapify.Core.Services;
 
@@ -33,10 +30,13 @@ public class WebScraper
 
         foreach (var webPage in webPages)
         {
-            foreach (var resource in webPage.GetResources())
-            {
-                await DownloadResource(resource, cancellationToken);
-            }
+            await Parallel.ForEachAsync(
+                webPage.GetResources(),
+                ParallelOptions,
+                async (resource, cancellationToken) =>
+                {
+                    await DownloadResource(resource, cancellationToken);
+                });
         }
     }
 

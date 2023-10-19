@@ -38,6 +38,6 @@ public class HtmlParserTests
         var webPage = htmlParser.Parse(Url, HtmlContent);
 
         // Assert
-        Assert.Equal(1, webPage.GetResources().Count);
+        Assert.Equal(2, webPage.GetResources().Count);
     }
 }

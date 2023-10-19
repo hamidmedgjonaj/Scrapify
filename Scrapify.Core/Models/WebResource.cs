@@ -68,7 +68,7 @@ public sealed class WebResource
     {
         if (directory.Length > 0 && directory[0] == '/')
         {
-            return directory.Substring(1);
+            return directory[1..];
         }
 
         return directory;

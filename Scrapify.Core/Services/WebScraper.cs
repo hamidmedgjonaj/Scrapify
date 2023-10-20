@@ -46,6 +46,7 @@ public class WebScraper
 
             OnProgressReported((double)iteration / 100);
             iteration += step;
+            Thread.Sleep(10);
         }
     }
 

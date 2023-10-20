@@ -81,22 +81,18 @@ public class WebScraper
             string localResourceDirectory = Path.Combine(_rootDirectory, resource.Directory);
             string localResourceFilePath = Path.Combine(localResourceDirectory, resource.FileName);
 
-            if (File.Exists(localResourceFilePath))
+            if (!File.Exists(localResourceFilePath))
             {
-                return;
+                if (!Directory.Exists(localResourceDirectory))
+                {
+                    Directory.CreateDirectory(localResourceDirectory);
+                }
+
+                using var stream = await _httpClient.GetResourceStream(resource.Uri.AbsoluteUri, cancellationToken);
+                using var fileStream = new FileStream(localResourceFilePath, FileMode.Create);
+
+                await stream.CopyToAsync(fileStream, cancellationToken);
             }
-
-            if (!Directory.Exists(localResourceDirectory))
-            {
-                Directory.CreateDirectory(localResourceDirectory);
-            }
-
-            using var stream = await _httpClient.GetResourceStream(resource.Uri.AbsoluteUri, cancellationToken);            
-            using var fileStream = new FileStream(localResourceFilePath, FileMode.Create);
-
-            await stream.CopyToAsync(fileStream, cancellationToken);
-
-            // Console.WriteLine($"Downloaded resource: {localResourceFilePath}/{resource.FileName}");
         }
         catch (Exception ex)
         {
